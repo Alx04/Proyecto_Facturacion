@@ -17,12 +17,14 @@
 
 
 </head>
-<body class="hold-transition login-page">
+<body class="hold-transition login-page" style="background: linear-gradient(20deg, #000033, #0097A7);">
 <div class="login-box">
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <i class="fas fa-file-invoice-dollar fa-5x"></i>
+      <div style="width: 35%; float: left;"><img src="<?=base_url()?>/plantilla/dist/img/logo.png" width="100px"></div>
+      <div style="width: 90%"><h3 >Facturación</h3>
+      <h3 > Electrónica</h3> </div>
     </div>
     <div class="card-body">
       <p class="login-box-msg">Inicio de sesion</p>

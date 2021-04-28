@@ -14,23 +14,21 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="<?=base_url()?>/plantilla/dist/css/adminlte.min.css">
   <link rel="icon" type="image/png" href="<?=base_url()?>/plantilla/dist/img/logo.png">
-  <style type="text/css">
-    body { 
-      background: url(<?=base_url()?>/plantilla/dist/img/fondo.jpg) no-repeat center center fixed; 
-      -webkit-background-size: cover;
-      -moz-background-size: cover;
-      -o-background-size: cover;
-      background-size: cover;
-    }
-  </style>
+
 </head>
-<body class="hold-transition register-page">
+<body class="hold-transition register-page" style="background: linear-gradient(20deg, #000033, #0097A7);">
 <div class="register-box">
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <a href="<?=base_url()?>/plantilla/index2.html" class="h1">
-        <img src="<?=base_url()?>/plantilla/dist/img/logo.png" width="100px">
-      </a>
+        <div class="card-header text-center">
+          <div style="width: 35%; float: left;">
+            <img src="<?=base_url()?>/plantilla/dist/img/logo.png" width="100px">
+          </div>
+          <div style="width: 90%">
+            <h3 >Facturación</h3>
+            <h3 > Electrónica</h3> 
+          </div>
+        </div>
     </div>
     <div class="card-body">
       <p class="login-box-msg">Registro nuevo usuario</p>
