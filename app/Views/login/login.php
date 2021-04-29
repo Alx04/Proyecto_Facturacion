@@ -23,11 +23,11 @@
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
       <div style="width: 35%; float: left;"><img src="<?=base_url()?>/plantilla/dist/img/logo.png" width="100px"></div>
-      <div style="width: 90%"><h3 >Facturación</h3>
-      <h3 > Electrónica</h3> </div>
+      <div style="width: 90%"><h3 lass="login-box-msg" >Facturación</h3>
+      <h3 lass="login-box-msg"> Electrónica</h3> </div>
     </div>
     <div class="card-body">
-      <p class="login-box-msg">Inicio de sesion</p>
+      <h4 class="login-box-msg">Inicio de sesión</h4>
 
       <form id="frmLogin">
         <div class="input-group mb-3">
@@ -73,9 +73,13 @@
     <!-- /.card-body -->
   </div>
   <!-- /.card -->
+  
 </div>
 <!-- /.login-box -->
-
+<div style="float: right; padding-left: 2%; color: gray;box-shadow: 1px 2px 2px gray;margin-left: 70%">
+  <h5>Grupo 3</h5> <br>
+  <p style="padding-right:5px">Alexander Mora Valdez <br>Norma Chavarria Rojas <br> Juan Calderón Chácon <br> Keren Cambronero Quesada</p>
+</div>
 <!-- jQuery -->
 <script src="<?=base_url()?>/plantilla/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->

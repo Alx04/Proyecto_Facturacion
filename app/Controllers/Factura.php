@@ -84,7 +84,7 @@ class Factura extends BaseController
 
 
 	public function generarXml() {
-        $id_factura="112";
+        $id_factura="128";
         $factura= str_pad($id_factura,10,"0",STR_PAD_LEFT);
         $surcusal= "001";
         $pv="00001";
@@ -439,8 +439,6 @@ class Factura extends BaseController
                 "qrCodigo" => $qr->codigoQR($dataQR),
                 "logo" => base64_encode($logoImg),
             );
-
-            
             $this->response->setHeader('Content-Type', 'application/pdf');
             $pdf->load_view("pdfs/facturaPDF", $dataPdf );
             $pdf->save_view("pdfs/facturaPDF", $dataPdf );
@@ -767,13 +765,6 @@ class Factura extends BaseController
             return view('login/login');
         }
     }
-
-
-   
-
-
-
-	
 
 	
 
