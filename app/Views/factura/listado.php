@@ -25,12 +25,25 @@
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Card title</h5>
+              <h5 class="card-title">Listado de facturas</h5>
 
-              <p class="card-text">
-                Some quick example text to build on the card title and make up the bulk of the card's
-                content.
-              </p>
+              <div class="card-body">
+                <table class="table table-bordered table-hover">
+                  <thead>
+                      <tr>
+                        <th>Número de factura</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Emisor</th>
+                        <th>Cliente</th>
+                        <th>Factura</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+          
+                  </tbody>
+                </table>
+              </div>
 
               <a href="#" class="card-link">Card link</a>
               <a href="#" class="card-link">Another link</a>
