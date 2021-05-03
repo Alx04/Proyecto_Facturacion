@@ -221,7 +221,7 @@
               </div>
               <div class="row">
                 <div class="col-12" style="text-align: center;">
-                  <button  type="submit" class="btn btn-success"> <i class="fas fa-check-circle"></i> Generar Documento</button>
+                  <button id="btnGenerarFactura"  type="submit" class="btn btn-success"> <i class="fas fa-check-circle"></i> Generar Documento</button>
                 </div>
               </div>
             </div>
@@ -229,10 +229,62 @@
         </div>  
       </div>
     </form>
-
-
-
   </div>
+</div>
+
+<!--Modal-->
+<div class="modal fade" id="modalRespuesta">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header modal-header-info">
+        <h4 class="modal-title">Documento Creado</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+            <div class="form-group">
+              <label>Clave</label>
+              <input type="text" class="form-control" id="clave">
+            </div>
+            <div class="form-group">
+              <label>Enviado</label>
+              <div class="input-group mb-3">
+                <input type="text" id="enviado" class="form-control">
+                <div class="input-group-append">
+                  <span class="input-group-text"><i class="fas fa-check" id="icon_enviado"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Validado</label>
+              <div class="input-group mb-3">
+                <input type="text" id="validado" class="form-control">
+                <div class="input-group-append">
+                  <span class="input-group-text"><i class="fas fa-check" id="icon_validado"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Mensaje</label>
+              <input type="text" class="form-control" id="mensaje">
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <label style="margin-left:10px;">Validar</label>    
+                <div id="validar" style="margin-left:10px;"></div>                 
+              </div>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <a href="<?=base_url('factura/listado')?>"><button type="button" class="btn btn-info">Listado</button></a>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
 </div>
 
 <?= $this->endSection() ?>
@@ -326,19 +378,71 @@ $(document).on('click','.eliminarLinea',function(){
   totales();
 });
 
-
-
 $("#frmFacturar").on('submit', function(e){
-    e.preventDefault();
+  $("#btnGenerarFactura").attr('disabled', true);
+  e.preventDefault();
+  Pace.track(function () {
     $.ajax({
       "url": "<?=base_url()?>/factura/generarFactura",
       "method": "post",
       "data": $('#frmFacturar').serialize(),
       "dataType": "json",
     }).done(function (response) {
-      alert(response);
+      $("#modalRespuesta").modal('show');
+    }).always(function (response) {
+        $("#clave").val(response.clave);
+        //si fue enviado
+        if (response.enviar>=200 && response.enviar<300) {
+          $("#enviado").val('enviado');
+        }else{
+          $("#enviado").val(response.enviar);
+          $("#icon_enviado").addClass("fa-times");
+          $("#icon_validado").addClass("fa-times");
+        }
+        
+        // si fuue valido
+        $("#validado").val(response.validar_estado);
+        if (response.mensaje==3) {
+          $("#icon_validado").addClass("fa-times");
+          alert("documento rechazado");
+        }
+        $("#mensaje").val(response.validar_mensaje);
+        $("#validar").html('');
+        if (response.validar_estado=="procesando") {
+          $("#icon_validado").addClass("fa-exclamation");
+          $("#validar").append('<button class="btn btn-warning btn-sm reValidar" value="'+response.clave+'">Validar</button>');
+        }
+      $("#btnGenerarFactura").attr('disabled', false);
     });
   });
+});
+
+$(document).on('click','.reValidar',function(){
+  Pace.track(function () {
+    $.ajax({
+      "url": "<?=base_url()?>/facturar/validarXmlDesatendido",
+      "method": "post",
+      "data": {"clave": this.value},
+      "dataType": "json",
+    }).done(function (response) {
+      if(response.ind_estado == 'aceptado'){
+        $("#icon_validado").addClass("fa-check");
+      }
+      $("#validado").val(response.ind_estado);
+      $("#validar").html(response.ind_estado);
+    }).always(function (response) {
+      $("#btnGenerarFactura").attr('disabled', false);
+    });
+  });
+});
+
+$("#modalRespuesta").modal('show');
+$("#clave").val('123');
+$("#enviado").val('enviado');
+$("#validar").html('');
+$("#validar").append('<button class="btn btn-warning btn-sm reValidar" value="133">Validar</button>');
+$("#icon_validado").addClass("fa-times");
+
 
 </script>
 <?= $this->endSection() ?>
