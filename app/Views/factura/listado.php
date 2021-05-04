@@ -45,7 +45,7 @@
                         <td><?=$factura->fecha?></td>  
                         <td><?=$factura->emisor_nombre?></td>
                         <td><?=$factura->receptor_nombre?></td>
-                        <td><a href="<?=base_url()?>/archivos/pdf/Documento <?=$factura->clave?>.pdf" target="_blank"><img src="<?=base_url()?>/plantilla/dist/img/facturaLogo.png" style="width: 75px; height: 75px">
+                        <td><a href="<?=base_url()?>/archivos/pdf/<?=$factura->clave?>.pdf" target="_blank"><img src="<?=base_url()?>/plantilla/dist/img/facturaLogo.png" style="width: 75px; height: 75px">
                         </a></td>
                       </tr>
                     <?php endforeach;?>

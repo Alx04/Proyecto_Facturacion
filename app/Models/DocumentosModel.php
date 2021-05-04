@@ -741,7 +741,7 @@ class DocumentosModel extends Model{
         return $query->get()->getResult();
     }
     public function selectFacturas(){
-        $query = $this->db->table($this->documentosListado_view)->OrderBy('fecha');
+        $query = $this->db->table($this->documentosListado_view);
         return $query->get()->getResult();
     }
     public function selectDocumento(){
