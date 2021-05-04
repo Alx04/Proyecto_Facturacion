@@ -62,7 +62,7 @@ class DocumentosModel extends Model{
     private $fecha_valido;   
 
     private $tabla= "documentos";
-    private $tabla_view= "documentos_view";
+    private $documentosListado_view= "documentoslistado_view";
 ///***
 
 
@@ -740,7 +740,10 @@ class DocumentosModel extends Model{
         $query = $this->db->table($this->tabla);
         return $query->get()->getResult();
     }
-    
+    public function selectFacturas(){
+        $query = $this->db->table($this->documentosListado_view)->OrderBy('fecha');
+        return $query->get()->getResult();
+    }
     public function selectDocumento(){
         $query = $this->db->table($this->tabla);
         $query->where('id_documento', $this->id_documento);

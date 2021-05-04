@@ -27,7 +27,18 @@ class Factura extends BaseController
 
 	public function listado()
 	{
-		return view('factura/listado');
+		if( is_login() ){
+            $documentosModel= new DocumentosModel();
+
+            $data= array(
+                "facturas"=> $documentosModel->selectFacturas(),
+            );
+
+            return view('factura/listado', $data);
+
+        }else{
+            return redirect()->to(base_url("login/login"));
+        }
 	}
 
 

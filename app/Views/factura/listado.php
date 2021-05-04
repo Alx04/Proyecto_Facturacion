@@ -30,17 +30,25 @@
               <div class="card-body">
                 <table class="table table-bordered table-hover">
                   <thead>
-                      <tr>
+                      <tr style="background-color: #0097A7">
                         <th>Número de factura</th>
                         <th>Fecha</th>
-                        <th>Hora</th>
                         <th>Emisor</th>
                         <th>Cliente</th>
                         <th>Factura</th>
                       </tr>
                   </thead>
                   <tbody>
-          
+                    <?php foreach ($facturas as $key => $factura):?>
+                      <tr>
+                        <td><?=$factura->consecutivo?></td>
+                        <td><?=$factura->fecha?></td>  
+                        <td><?=$factura->emisor_nombre?></td>
+                        <td><?=$factura->receptor_nombre?></td>
+                        <td><a href="<?=base_url()?>/archivos/pdf/Documento <?=$factura->clave?>.pdf" target="_blank"><img src="<?=base_url()?>/plantilla/dist/img/facturaLogo.png" style="width: 75px; height: 75px">
+                        </a></td>
+                      </tr>
+                    <?php endforeach;?>
                   </tbody>
                 </table>
               </div>
