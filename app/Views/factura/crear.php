@@ -7,7 +7,7 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Dash</h1>
+          <h1 class="m-0">Crear Factura Electrónica</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
@@ -64,7 +64,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-1">
+                  <div class="col-md-2">
                     <div class="form-group">
                       <div class="input-group">
                         <div class="input-group-prepend">
@@ -121,9 +121,9 @@
             </div>
             <div class="card-body">
               <div class="row table-responsive">
-                <table class="table table-hover table-bordered">
+                <table class="table-hover table-bordered">
                   <thead>
-                    <tr>
+                    <tr style="text-align:center">
                       <th>Codigo</th>
                       <th>Detalle</th>
                       <th>Unid</th>
@@ -141,24 +141,24 @@
                   </thead>
                   <tbody id="tblDetalles">
                     <tr id="linea1" class="linea">
-                      <td>
+                      <td width="12%">
                         <select class="form-control" name="codigo[]" required>
                           <option value="8344900000000">8344900000000</option>
                         </select>
                       </td>
-                      <td>
+                      <td width="8%">
                         <input class="form-control" type="text" name="detalle[]" required>
                       </td>
-                      <td width="6%">
+                      <td width="8%">
                         <select class="form-control" name="unidad[]" required>
                           <option value="Unid">Un</option>
                           <option value="Sp">Sp</option>
                         </select>
                       </td>
-                      <td width="5%">
+                      <td width="2%">
                         <input class="form-control cantidad calcular" min="1" type="number" name="cantidad[]" required>
                       </td>
-                      <td width="10%">
+                      <td width="8%">
                         <input class="form-control precio calcular" min="0" type="number" name="precio_unidad[]" required>
                       </td>
                       <td width="10%">
@@ -173,7 +173,7 @@
                       <td width="8%">
                         <input class="form-control subtotal" type="number" name="sub_total[]" readonly required>
                       </td>
-                      <td width="8%">
+                      <td width="6%">
                         <input class="form-control impP" type="number"  value="13" name="tarifa[]" readonly required>
                       </td>
                       <td width="8%">
@@ -344,7 +344,7 @@ function totales(){
   IVA=0;
   total=0;
 
-  $(".table tbody .linea").each(function(i, item) {
+  $("table tbody .linea").each(function(i, item) {
     neto += parseFloat($(item).find(".neto").val());
     descuentos += parseFloat($(item).find(".descM").val());
     subtotal += parseFloat($(item).find(".subtotal").val());
@@ -410,7 +410,7 @@ $("#frmFacturar").on('submit', function(e){
         $("#validar").html('');
         if (response.validar_estado=="procesando") {
           $("#icon_validado").addClass("fa-exclamation");
-          $("#validar").append('<button class="btn btn-warning btn-sm reValidar" value="'+response.clave+'">Validar</button>');
+          $("#validar").append('<button type="button" data-toggle="modal" data-target="#modalRespuesta" class="btn btn-warning btn-sm reValidar" value="'+response.clave+'">Validar</button>');
         }
       $("#btnGenerarFactura").attr('disabled', false);
     });
@@ -420,29 +420,24 @@ $("#frmFacturar").on('submit', function(e){
 $(document).on('click','.reValidar',function(){
   Pace.track(function () {
     $.ajax({
-      "url": "<?=base_url()?>/facturar/validarXmlDesatendido",
+      "url": "<?=base_url()?>/factura/validarXmlDesatendido",
       "method": "post",
-      "data": {"clave": this.value},
+      "data": {"clave": $('.reValidar').val()},
       "dataType": "json",
     }).done(function (response) {
-      if(response.ind_estado == 'aceptado'){
-        $("#icon_validado").addClass("fa-check");
+      $("#modalRespuesta").modal('show');
+      if(response.estado == 'aceptado'){
+        $("#icon_validado").removeClass("fa-exclamation").addClass("fa-check"); 
       }
-      $("#validado").val(response.ind_estado);
-      $("#validar").html(response.ind_estado);
+      $("#validado").val(response.estado);
+      $("#validar").html(response.estado);
+      $("#mensaje").val(response.estado);
+
     }).always(function (response) {
       $("#btnGenerarFactura").attr('disabled', false);
     });
   });
 });
-
-$("#modalRespuesta").modal('show');
-$("#clave").val('123');
-$("#enviado").val('enviado');
-$("#validar").html('');
-$("#validar").append('<button class="btn btn-warning btn-sm reValidar" value="133">Validar</button>');
-$("#icon_validado").addClass("fa-times");
-
 
 </script>
 <?= $this->endSection() ?>

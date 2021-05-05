@@ -7,9 +7,9 @@
 <table width="100%">
 	<tr>
 		<td>
-			<img src="data:image/png;base64,'<?=$logo?>'" width="20%" >
+			<img src="data:image/png;base64,'<?=$logo?>'" width="10%" >
 		</td>
-		<td align="center"><h1>Factura Electronica</h1></td>
+		<td align="center"><h1>Factura Electrónica</h1></td>
 		<td align="right">
 			<h3>Factura # <?=$documento->consecutivo?></h3>
 			Fecha <?=$documento->fecha?> <br>
@@ -17,6 +17,7 @@
 		</td>
 	</tr>
 </table>
+<br>
 
 <table width="100%" >
     <tr><td><u>Emisor</u></td></tr>
@@ -29,6 +30,7 @@
         <td><b>Correo</b>: <?=$documento->emisor_correo;?></td>
         <td colspan="2"><b>Dirección</b>: <?=$documento->emisor_otras_senas;?> </td>
     </tr>
+	
     <tr><td><u>Receptor</u></td></tr>
     <tr>
         <td><b>Cedula</b>:  <?=$documento->receptor_cedula;?></td>
@@ -40,7 +42,7 @@
         <td colspan="2"><b>Dirección</b>: <?=$documento->receptor_otras_senas;?> </td>
     </tr>
 </table>
-<br><br>
+<br><br><br>
 
 <table width="100%">
 	<tr>
@@ -60,6 +62,7 @@
 			<td>TotalLinea</td>
 		</tr>
 	</thead>
+	<br><br><br><br>
 	<tbody>
 		<?php foreach ($detalles as $key => $linea): ?>
 			<tr>
@@ -108,10 +111,10 @@
 <small>Moneda: <?=$documento->moneda;?></small><br>
 <small>Tipo Cambio: <?=number_format($documento->tipo_cambio,2,",",".") ?></small><br>
 <small>Notas: <?= $documento->notas;?></small>
-<br>
+<br><br>
 <small><u>Monto a pagar en Dolares= <?=number_format(($documento->total_comprobante/$documento->tipo_cambio),2,",",".") ?></u></small>
 
-<br>
+<br><br>
 <small>Emitida conforme lo establecido en la resolución de Facturación Electrónica, N° DGT-R-48-2016 siete de octubre de dos mil dieciséis de la Dirección General de Tributación.</small>
 </body>
 </html>

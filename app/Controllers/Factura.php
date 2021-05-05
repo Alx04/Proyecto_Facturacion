@@ -370,7 +370,7 @@ class Factura extends BaseController
 
     }
 
-    public function validarDesantendido(){
+    public function validarXmlDesatendido(){
         $clave= $_POST['clave'];
         
         $header= array(
@@ -395,7 +395,6 @@ class Factura extends BaseController
         //obtener respuesta
 
         $xml= json_decode($response, true);
-        var_dump($xml);
 
         if (isset($xml['respuesta-xml'])) {
             $respuesta_xml= $xml['respuesta-xml'];
@@ -408,10 +407,22 @@ class Factura extends BaseController
             $doc->save($salida);
         }
 
-        //return json_encode( array('response'=> $response , 'xml'=>$xml ));
+        if (isset($xml['ind-estado'])) {
+            if($xml['ind-estado']!="procesando"){
 
-        $validar=  json_decode($xml, true);
-        return json_encode( array('ind_estado'=>$validar['xml']['ind-estado'] ));
+                //actualizar validado-----
+                $DocumentosModel= new DocumentosModel();
+                $DocumentosModel->setClave($clave);
+                $documento = $DocumentosModel->selectDocumentoClave();
+
+                $DocumentosModel->setIdDocumento($documento->id_documento);
+                $DocumentosModel->setValidoAtv(1);
+                $DocumentosModel->setFechaValido(date("Y-m-d H:i:s"));
+                $DocumentosModel->actualizaValidado();
+            }
+        }
+    
+        return json_encode(array('estado' => $xml['ind-estado']));
 
     }
 
@@ -879,6 +890,16 @@ class Factura extends BaseController
                         "correo_enviado" => false,
                     ));
                 }
+
+                //Probando el proceso cuando factura envia de estado procesando
+                return json_encode(array(
+                    'clave' => $clave, 
+                    "enviar"=> $enviar->status,
+                    "validar_estado" => "procesando",
+                    "mensaje" => "Error",
+                    "validar_mensaje" => "Error",
+                    "correo_enviado" => false,
+                ));
 
 
             }else{
